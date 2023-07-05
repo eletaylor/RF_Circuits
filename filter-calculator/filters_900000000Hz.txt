@@ -1,0 +1,33 @@
+
+#################################################################
+
+Transformations for a filter with cutoff frequency 900000000.0 Hz
+
+######################### LOWPASS FILTER ########################
+
+Inductor (L_lp):			4e-06 H
+Capacitor (C_lp):			8e-09 F
+
+######################## HIGHPASS FILTER ########################
+
+Inductor (L_hp):			7.818453730526395e-15 H
+Capacitor (C_hp):			3.909226865263198e-12 F
+
+######################## BANDPASS FILTER ########################
+
+Bandwidth (bw_Hz):			100000000.0 Hz
+Series inductor (L_bp_series):		3.6e-05 H
+Series capacitor (C_bp_series):		8.687170811695995e-16 F
+Parallel inductor (L_bp_parallel):	4.3435854058479974e-13 H
+Parallel capacitor (C_bp_parallel):	7.2e-08 F
+
+######################## BANDSTOP FILTER ########################
+
+Bandwidth (bw_Hz):			100000000.0 Hz
+Parallel inductor (L_bs_parallel):	4.4444444444444444e-07 H
+Parallel capacitor (C_bs_parallel):	7.036608357473755e-14 F
+Series inductor (L_bs_series):		3.518304178736878e-11 H
+Series capacitor (C_bs_series):		8.88888888888889e-10 F
+
+#################################################################
+
