@@ -10,18 +10,76 @@
 
 PI = 3.1415
 
+import textwriter
+
 def main():
 
-    print ("\n#################################################################\n")
+    print ("\n#######################################################################")
+    print ("\nWELCOME TO FILTER CALCULATOR - Your one-stop shop for all filter needs!")
+    print ("\n#######################################################################\n")
 
-    L_lp = float(input("Enter the lowpass filter inductor value in H:\t"))
-    C_lp = float(input("Enter the highpass filter capacitor value in F:\t"))
+    mode = -1
+    while (mode < 1):
+        mode = int(input ("""\nWhich version of the calculator do you want?
+                            1:  Find all transformaitons from known constant-k LPF values
+                            2:  Find all constant-k transformations for a 50-ohm transmission
+                                line filter of a given frequency with no known components
+                            3:  Find all constant-k transformations for a non-50-ohm
+                                transmission line filter with no known components"""))
+
+        match mode:
+            case 1:
+                L_lp = float(input("Enter the lowpass filter inductor value in H:\t"))
+                C_lp = float(input("Enter the lowpass filter capacitor value in F:\t"))
+            case 2: # Page 735
+                L_lp = 15.9155e-9 * (1e9/f_0) 
+                C_lp = 6.3662e-12 * (1e9/f_0)
+            case 3: # Page 735
+                Z_0 = float(input("Enter the characteristic impedance in Ohms:\t"))
+                L_lp = 15.9155e-9 * (1e9/f_0) 
+                C_lp = 6.3662e-12 * (1e9/f_0)
+            # case 4: # Find all m-derived components with no known components, variable impedance and m-value
+                #This will require some changes to be made to textwriter to accomodate more components
+            case _:
+                mode = -1
 
     f_0 = float(input("Enter the cutoff frequency in Hz:\t"))
     bw_Hz = float(input("Enter the desired bandwidth in Hz:\t"))
     
+    
     # For a transmission line, Z_0 = sqrt(L/C)
     # If we include parasitics, Z_0 = sqrt((R + jwL)/(G + jwC))
+
+    # w_h = 2/sqrt(LC)
+    # w_0 = 1/sqrt(LC)
+
+    # C = 1/(w_0 * Z_0)
+    # L = Z_0 / w_0
+
+    # Using an m-derived half-section like in fig. 2.9:
+    #   L_1 (series) = (mL)/2
+    #   L_2 (parallel, in series with C_1) = (1 - m^2)L/(2*m)
+    #   C_1 (parallel, in series with L_2) = (mC)/2
+
+    # C = (2/w_h)*(1/Z_0)
+    # L = (2/w_h)*Z_0
+
+    # Using T-sections -- the end parallel capacitors are equal to C/2
+    # Using pi-sections -- the end series inductors are equal to L/2
+    # In both cases, the center core sections use C and L (combining series
+    # additions of L/2 + L/2)
+
+    # If using m-derived sections:
+    #   L_1 = (2m/w_1)*R
+    #   L_2 = (1-m^2)*R/(2m*w_1)
+    #   C_1 = (2m/w_1)*(1/Z_0)
+    # Note that the T-section designs' end sections will have 2*L_2 and C_1/2
+
+    # Table values (22.2) assume m = 0.6, so use that here.
+    # m can be modified to create a notch by using m = sqrt(1 - (w_1/w_notch)^2)
+
+    # Table 22.5 gives butterworth values, use equations 31 and 32
+    # Table 22.7 gives chebyshev values
 
     w_0 = f_0 * 2 * PI
     bw_rad = bw_Hz * 2 * PI
@@ -47,29 +105,7 @@ def main():
     C_bs_series = (bw_rad * C) / (w_0 * w_0)
     
     # Save as a list of strings to be iterable
-    text = [
-            f"\n#################################################################\n",
-            f"Transformations for a filter with cutoff frequency {f_0} Hz",
-            f"\n######################### LOWPASS FILTER ########################\n",
-            f"Inductor (L_lp):\t\t\t{L_lp} H",
-            f"Capacitor (C_lp):\t\t\t{C_lp} F",
-            f"\n######################## HIGHPASS FILTER ########################\n",
-            f"Inductor (L_hp):\t\t\t{L_hp} H",
-            f"Capacitor (C_hp):\t\t\t{C_hp} F",
-            f"\n######################## BANDPASS FILTER ########################\n",
-            f"Bandwidth (bw_Hz):\t\t\t{bw_Hz} Hz",
-            f"Series inductor (L_bp_series):\t\t{L_bp_series} H",
-            f"Series capacitor (C_bp_series):\t\t{C_bp_series} F",
-            f"Parallel inductor (L_bp_parallel):\t{L_bp_parallel} H",
-            f"Parallel capacitor (C_bp_parallel):\t{C_bp_parallel} F",
-            f"\n######################## BANDSTOP FILTER ########################\n",
-            f"Bandwidth (bw_Hz):\t\t\t{bw_Hz} Hz",
-            f"Parallel inductor (L_bs_parallel):\t{L_bs_parallel} H",
-            f"Parallel capacitor (C_bs_parallel):\t{C_bs_parallel} F",
-            f"Series inductor (L_bs_series):\t\t{L_bs_series} H",
-            f"Series capacitor (C_bs_series):\t\t{C_bs_series} F",
-            f"\n#################################################################\n"
-            ]
+    text = textwriter(f_0, bw_Hz, L_lp, C_lp, L_hp, C_hp, L_bp_series, C_bp_series, L_bp_parallel, C_bp_parallel, L_bs_parallel, C_bs_parallel, L_bs_series, C_bs_series)
             
     filename = f"filters_{int(f_0)}Hz.txt"
     with open(filename, 'w+', newline= '') as textfile:
