@@ -18,6 +18,9 @@ def main():
                  "L_lp", "C_lp", "L_hp", "C_hp", 
                  "L_bp_series", "C_bp_series", "L_bp_parallel", "C_bp_parallel", 
                  "L_bs_parallel", "C_bs_parallel", "L_bs_series", "C_bs_series"]
+    # List of all values tracked by the Butterworth calculators
+    butterworth_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad", "n"]
+
     filter_values = {}
 
     print ("\n#######################################################################")
@@ -44,7 +47,7 @@ def main():
                 filter_values = calculate.constk(constk_keys_list)
                 text = txt.constk_writer(filter_values)
             case 4:
-                filter_values = calculate.butterworth()
+                filter_values = calculate.butterworth(butterworth_keys_list)
                 text = txt.butterworth_writer(filter_values)
             # case x: # Find all m-derived components with a variable m-value
                 #This will require a new textwriter method
@@ -61,7 +64,6 @@ def main():
     # C = 1/(w_0 * Z_0)
     # L = Z_0 / w_0
 
-    # Table 22.5 gives butterworth values, use equations 31 and 32
     # Table 22.7 gives chebyshev values
             
     filename = f"filters_{int(filter_values.get('f_0'))}Hz_{int(filter_values.get('Z_0'))}Ohm.txt"

@@ -166,19 +166,19 @@ def butterworth(keys_list):
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
 
     eps = 0.5   # Arbitrary, related to passband spec. Maybe add user config later.
-    b = []
     n = filter_values.get("n")
+    b = [0] * n
     w_0 = filter_values.get("w_0")
     R = filter_values.get("Z_0")
     bw_rad = filter_values.get("bw_rad")
 
-    for k in range(1, n):
-        b[k-1] = 2 * (pow(eps, (1.0/n))) * math.sin(((2*k - 1)*PI)/(2*n))
+    for k in range(1, len(b) + 1):
+        b[k-1] = 2 * (pow(eps, (1.0/n))) * abs(math.sin(((2*(k+1) - 1)*PI)/(2*n)))
 
     # The values given are for capacitor-first design!
     # Find the LPF values for the Butterworth filter
     lpf = {}
-    for k in range(1, n):
+    for k in range(1, len(b) + 1):
         if (k % 2 == 0):
             lpf[f"L{k}"] = (R * b[k-1]) / w_0
         else:
@@ -195,8 +195,8 @@ def butterworth(keys_list):
     bsf = {}
     for component in general:
         hpf[component] = 1 / (w_0 * general[component])
-        bp_transform = []
-        bs_transform = []
+        bp_transform = [0,0]
+        bs_transform = [0,0]
         if (component[0] == "L"):
             bp_transform[0] = general[component] / bw_rad
             bp_transform[1] = bw_rad / (w_0 * w_0 * general[component])
@@ -216,6 +216,15 @@ def butterworth(keys_list):
     filter_values["HPF"] = hpf
     filter_values["BPF"] = bpf
     filter_values["BSF"] = bsf
+
+    # Set any values that didn't get set up to -1 for error checking purposes
+    for key in keys_list:
+        if key in filter_values:
+            continue
+        else:
+            filter_values[key] = -1.0
+    
+    return filter_values
 
 # If using m-derived sections:
 #   L_1 = (2m/w_1)*R
