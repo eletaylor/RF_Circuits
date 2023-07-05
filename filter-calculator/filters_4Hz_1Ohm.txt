@@ -1,0 +1,43 @@
+
+#################################################################
+
+Transformations for a filter with:
+  Cutoff frequency:			4.0 Hz
+  Characteristic impedance:		1.0 Ohms
+
+######################### LOWPASS FILTER ########################
+
+Inductor (L_lp):			4.0 H
+Capacitor (C_lp):			4.0 F
+
+######################## HIGHPASS FILTER ########################
+
+Inductor (L_hp):			0.0003958092201078987 H
+Capacitor (C_hp):			0.0003958092201078987 F
+
+######################## BANDPASS FILTER ########################
+
+Bandwidth (bw_Hz):			4.0 Hz
+Series inductor (L_bp_series):		4.0 H
+Series capacitor (C_bp_series):		0.00039580922010789876 F
+Parallel inductor (L_bp_parallel):	0.00039580922010789876 H
+Parallel capacitor (C_bp_parallel):	4.0 F
+
+######################## BANDSTOP FILTER ########################
+
+Bandwidth (bw_Hz):			4.0 Hz
+Parallel inductor (L_bs_parallel):	4.0 H
+Parallel capacitor (C_bs_parallel):	0.0003958092201078987 F
+Series inductor (L_bs_series):		0.0003958092201078987 H
+Series capacitor (C_bs_series):		4.0 F
+
+#################################################################
+
+This calculator gives values for "core" components.
+If using T sections for the filter, the parallel capacitors on
+  either end will have half the capacitance of the core ones.
+If using pi sections for the filter, the seies inductors on either
+  end will have half the inductance of the core ones.
+
+#################################################################
+
