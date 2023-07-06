@@ -1,3 +1,16 @@
+'''
+    txt.py
+
+    This file acts as a library of text functions for different types of filters to
+    display their output in a user-friendly manner.
+    
+    Author:     Eleanor Taylor
+
+    Created:     5 July 2023
+    Modified:    6 July 2023
+    
+'''
+
 def constk_writer(filter_values):
 
     text = [

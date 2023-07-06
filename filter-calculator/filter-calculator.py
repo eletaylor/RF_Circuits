@@ -2,6 +2,8 @@
     filter-calculator.py
 
     This is a program to help calculate filter transformation values.
+    
+    Author:     Eleanor Taylor
 
     Created:    22 June 2023
     Modified:    6 July 2023
