@@ -342,26 +342,43 @@ def chebyshev(keys_list):
             filter_values[key] = -1.0
     
     return filter_values
-# If using m-derived sections:
-#   L_1 = (2m/w_1)*R
-#   L_2 = (1-m^2)*R/(2m*w_1)
-#   C_1 = (2m/w_1)*(1/Z_0)
-# Note that the T-section designs' end sections will have 2*L_2 and C_1/2
+
+# CALCULATES FILTER VALUES FOR A 50-OHM TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS
+def msections_50ohm(keys_list): #TODO: IMPLEMENT
+
+    # If using m-derived sections:
+    #   L_1 = (2m/w_1)*R
+    #   L_2 = (1-m^2)*R/(2m*w_1)
+    #   C_1 = (2m/w_1)*(1/Z_0)
+    # Note that the T-section designs' end sections will have 2*L_2 and C_1/2
 
     # Using an m-derived half-section like in fig. 2.9: 
     #   L_1 (series) = (mL)/2
     #   L_2 (parallel, in series with C_1) = (1 - m^2)L/(2*m)
     #   C_1 (parallel, in series with L_2) = (mC)/2
 
-# Table values (22.2) assume m = 0.6, so use that here.
-# m can be modified to create a notch by using m = sqrt(1 - (w_1/w_notch)^2)
+    # Table values (22.2) assume m = 0.6, so use that here.
+    # m can be modified to create a notch by using m = sqrt(1 - (w_1/w_notch)^2)
 
-# CALCULATES FILTER VALUES FOR A 50-OHM TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS
-def msections_50ohm(keys_list): #TODO: IMPLEMENT
     filter_values = {}
     return filter_values
 
 # CALCULATES FILTER VALUES FOR A TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS
-def msections_50ohm(keys_list): #TODO: IMPLEMENT, ADD TRANSFORMATION FOR CHARACTERISTIC IMPEDANCE
+def msections(keys_list): #TODO: IMPLEMENT, ADD TRANSFORMATION FOR CHARACTERISTIC IMPEDANCE
+    
+    # If using m-derived sections:
+    #   L_1 = (2m/w_1)*R
+    #   L_2 = (1-m^2)*R/(2m*w_1)
+    #   C_1 = (2m/w_1)*(1/Z_0)
+    # Note that the T-section designs' end sections will have 2*L_2 and C_1/2
+
+    # Using an m-derived half-section like in fig. 2.9: 
+    #   L_1 (series) = (mL)/2
+    #   L_2 (parallel, in series with C_1) = (1 - m^2)L/(2*m)
+    #   C_1 (parallel, in series with L_2) = (mC)/2
+
+    # Table values (22.2) assume m = 0.6, so use that here.
+    # m can be modified to create a notch by using m = sqrt(1 - (w_1/w_notch)^2)
+
     filter_values = {}
     return filter_values

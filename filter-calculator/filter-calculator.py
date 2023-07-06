@@ -30,6 +30,7 @@ def main():
     print ("\n#######################################################################\n")
 
     mode = 0
+    mode_string = ""
     while (mode < 1):
         print ("""\nWhich version of the calculator do you want?
         1:  Find all transformaitons from known constant-k LPF values
@@ -44,18 +45,23 @@ def main():
             case 1:
                 filter_values = calculate.known_LPF(constk_keys_list)
                 text = txt.constk_writer(filter_values)
+                mode_string = "known_lpf_constk"
             case 2:
                 filter_values = calculate.constk_50ohm(constk_keys_list)
                 text = txt.constk_writer(filter_values)
+                mode_string = "constk"
             case 3:
                 filter_values = calculate.constk(constk_keys_list)
                 text = txt.constk_writer(filter_values)
+                mode_string = "constk"
             case 4:
                 filter_values = calculate.butterworth(buttershev_keys_list)
                 text = txt.butterworth_writer(filter_values)
+                mode_string = "butterworth"
             case 5:
                 filter_values = calculate.chebyshev(buttershev_keys_list)
                 text = txt.chebyshev_writer(filter_values)
+                mode_string = "chebyshev"
             # case x: # Find all m-derived components with a variable m-value
                 #This will require a new textwriter method
             # case x: # Find all m-derived components with a variable m-value and characteristic impedance
@@ -64,17 +70,18 @@ def main():
                 #This will require a new textwriter method
             case _:
                 mode = -1
-
-    # Table 22.7 gives chebyshev values
             
-    filename = f"filters_{int(filter_values.get('f_0'))}Hz_{int(filter_values.get('Z_0'))}Ohm.txt"
-    with open(filename, 'w+', newline= '') as textfile:
-        for line in text:
-            print(line)             # Print each line to the console
-            textfile.write(line)    # Print each line to the text file
-            textfile.write("\n")    # Add a newline character
+    for line in text:
+        print(line)             # Print each line to the console
 
-    print(f"Transformation values saved to: {filename}")
+    save = (input("Save to text file? (y/n)\t")).lower()
+    if (save[0] == "y"):
+        filename = f"{mode_string}_{int(filter_values.get('f_0'))}Hz_{int(filter_values.get('Z_0'))}Ohm.txt"
+        with open(filename, 'w+', newline= '') as textfile:
+            for line in text:
+                textfile.write(line)    # Print each line to the text file
+                textfile.write("\n")    # Add a newline character
+        print(f"Transformation values saved to: {filename}\n")
 
 if __name__ == "__main__":
     main()
