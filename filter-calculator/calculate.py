@@ -4,7 +4,7 @@
     This file acts as a library for different types of filter calculators to be used in filter-calculator.
 
     Author:     Eleanor Taylor
-    
+
     Created:     5 July 2023
     Modified:    6 July 2023
     
@@ -26,28 +26,32 @@ def known_LPF(keys_list):
     filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
 
+    # Add local versions of these for ease of use
+    w_0 = filter_values.get("w_0")
+    bw_rad = filter_values.get("bw_rad")
+
     # Find the global L and C values for transformation
-    L = filter_values.get("L_lp") * filter_values.get("w_0")
-    C = filter_values.get("C_lp") * filter_values.get("w_0")
+    L = filter_values.get("L_lp") * w_0
+    C = filter_values.get("C_lp") * w_0
 
     # Calculate characteristic impedance
     filter_values["Z_0"] = math.sqrt(L/C)
 
     # Find the highpass filter values from the global LC
-    filter_values["L_hp"] = 1/(filter_values.get("w_0") * L)
-    filter_values["C_hp"] = 1/(filter_values.get("w_0") * C)
+    filter_values["L_hp"] = 1/(w_0 * L)
+    filter_values["C_hp"] = 1/(w_0 * C)
 
     # Find the bandpass filter values from the global LC
-    filter_values["L_bp_series"] = L/filter_values.get("bw_rad")
-    filter_values["C_bp_series"] = filter_values.get("bw_rad")/(filter_values.get("w_0") * filter_values.get("w_0") * L)
-    filter_values["L_bp_parallel"] = filter_values.get("bw_rad")/(filter_values.get("w_0") * filter_values.get("w_0") * C)
-    filter_values["C_bp_parallel"] = C/filter_values.get("bw_rad")
+    filter_values["L_bp_series"] = L/bw_rad
+    filter_values["C_bp_series"] = bw_rad/(w_0 * w_0 * L)
+    filter_values["L_bp_parallel"] = bw_rad/(w_0 * w_0 * C)
+    filter_values["C_bp_parallel"] = C/bw_rad
 
     # Find the bandstop filter values from the global LC
-    filter_values["L_bs_parallel"] = (filter_values.get("bw_rad") * L) / (filter_values.get("w_0") * filter_values.get("w_0"))
-    filter_values["C_bs_parallel"] = 1/(filter_values.get("bw_rad") * L)
-    filter_values["L_bs_series"] = 1/(filter_values.get("bw_rad") * C)
-    filter_values["C_bs_series"] = (filter_values.get("bw_rad") * C) / (filter_values.get("w_0") * filter_values.get("w_0"))
+    filter_values["L_bs_parallel"] = (bw_rad * L) / (w_0 * w_0)
+    filter_values["C_bs_parallel"] = 1/(bw_rad * L)
+    filter_values["L_bs_series"] = 1/(bw_rad * C)
+    filter_values["C_bs_series"] = (bw_rad * C) / (w_0 * w_0)
 
     # Set any values that didn't get set up to -1 for error checking purposes
     for key in keys_list:
@@ -69,6 +73,7 @@ def constk_50ohm(keys_list):
     filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
 
+    # Add local versions of these for ease of use
     w_0 = filter_values.get("w_0")
     bw_rad = filter_values.get("bw_rad")
 
@@ -117,36 +122,41 @@ def constk(keys_list):
     filter_values["bw_Hz"] = float(input("Enter the desired bandwidth in Hz:\t\t"))
     Z = float(input("Enter the characteristic impedance in Ohms:\t"))
 
+    # Scale by impedance, the original values from p 735 are for 50 Ohms
     impedance_ratio = Z / 50.0
 
     filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
+
+    # Add local versions of these for ease of use
+    w_0 = filter_values.get("w_0")
+    bw_rad = filter_values.get("bw_rad")
 
     # These values are from p 735 in Planar Microwave Engineering
     filter_values["L_lp"] = 15.9155e-9 * (1e9/filter_values.get("f_0")) * impedance_ratio
     filter_values["C_lp"] = 6.3662e-12 * (1e9/filter_values.get("f_0")) / impedance_ratio
     
     # Find the global L and C values for transformation
-    L = filter_values.get("L_lp") * filter_values.get("w_0")
-    C = filter_values.get("C_lp") * filter_values.get("w_0")
+    L = filter_values.get("L_lp") * w_0
+    C = filter_values.get("C_lp") * w_0
 
     filter_values["Z_0"] = math.sqrt(L/C) # If we include parasitics, Z_0 = sqrt((R + jwL)/(G + jwC))
 
     # Find the highpass filter values from the global LC
-    filter_values["L_hp"] = 1/(filter_values.get("w_0") * L)
-    filter_values["C_hp"] = 1/(filter_values.get("w_0") * C)
+    filter_values["L_hp"] = 1/(w_0 * L)
+    filter_values["C_hp"] = 1/(w_0 * C)
 
     # Find the bandpass filter values from the global LC
-    filter_values["L_bp_series"] = L/filter_values.get("bw_rad")
-    filter_values["C_bp_series"] = filter_values.get("bw_rad")/(filter_values.get("w_0") * filter_values.get("w_0") * L)
-    filter_values["L_bp_parallel"] = filter_values.get("bw_rad")/(filter_values.get("w_0") * filter_values.get("w_0") * C)
-    filter_values["C_bp_parallel"] = C/filter_values.get("bw_rad")
+    filter_values["L_bp_series"] = L/bw_rad
+    filter_values["C_bp_series"] = bw_rad/(w_0 * w_0 * L)
+    filter_values["L_bp_parallel"] = bw_rad/(w_0 * w_0 * C)
+    filter_values["C_bp_parallel"] = C/bw_rad
 
     # Find the bandstop filter values from the global LC
-    filter_values["L_bs_parallel"] = (filter_values.get("bw_rad") * L) / (filter_values.get("w_0") * filter_values.get("w_0"))
-    filter_values["C_bs_parallel"] = 1/(filter_values.get("bw_rad") * L)
-    filter_values["L_bs_series"] = 1/(filter_values.get("bw_rad") * C)
-    filter_values["C_bs_series"] = (filter_values.get("bw_rad") * C) / (filter_values.get("w_0") * filter_values.get("w_0"))
+    filter_values["L_bs_parallel"] = (bw_rad * L) / (w_0 * w_0)
+    filter_values["C_bs_parallel"] = 1/(bw_rad * L)
+    filter_values["L_bs_series"] = 1/(bw_rad * C)
+    filter_values["C_bs_series"] = (bw_rad * C) / (w_0 * w_0)
 
     # Set any values that didn't get set up to -1 for error checking purposes
     for key in keys_list:
@@ -170,19 +180,21 @@ def butterworth(keys_list):
     filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
 
-    eps = 0.5   # Arbitrary, related to passband spec. Maybe add user config later.
+    # Local variables for ease of use
     n = filter_values.get("n")
-    b = [0] * n
     w_0 = filter_values.get("w_0")
     R = filter_values.get("Z_0")
     bw_rad = filter_values.get("bw_rad")
+    b = [0] * n
+    eps = 0.5   # Arbitrary, related to passband spec. Maybe add user config later.
 
+    # Find the bk coefficients for the filter, each corresponds to a component.
     for k in range(1, len(b) + 1):
         b[k-1] = 2 * (pow(eps, (1.0/n))) * abs(math.sin(((2*(k+1) - 1)*PI)/(2*n)))
 
     # The values given are for capacitor-first design!
     # Find the LPF values for the Butterworth filter
-    lpf = {}
+    lpf = {}    # component name (string) : component value (float)
     for k in range(1, len(b) + 1):
         if (k % 2 == 0):
             lpf[f"L{k}"] = (R * b[k-1]) / w_0
@@ -194,29 +206,32 @@ def butterworth(keys_list):
     for component in lpf:
         general[component] = lpf[component] * w_0
 
-    # Find the other filter values from the global LC
-    hpf = {}
-    bpf = {}
-    bsf = {}
+    # Find the other filter values from the general LC values
+    hpf = {}    # component name (string) : component value (float)
+    bpf = {}    # branch name (string) : [component 1 value (float), component 2 value (float)]
+    bsf = {}    # branch name (string) : [component 1 value (float), component 2 value (float)]
     for component in general:
+        # Add highpass transform value
         hpf[component] = 1 / (w_0 * general[component])
+        # Each componet turns into 2 for bandpass and bandstop
         bp_transform = [0,0]
         bs_transform = [0,0]
-        if (component[0] == "L"):
+        if (component[0] == "L"): # Bandpass and bandstop transformations for an inductor
             bp_transform[0] = general[component] / bw_rad
             bp_transform[1] = bw_rad / (w_0 * w_0 * general[component])
             bpf[f"SeriesLC{component[1]}"] = bp_transform
             bs_transform[0] = (bw_rad * general[component]) / (w_0 * w_0)
             bs_transform[1] = 1 / (bw_rad * general[component])
             bsf[f"ParallelLC{component[1]}"] = bs_transform
-        else:
+        else: # Bandpass and bandstop transformations for a capacitor
             bp_transform[0] = bw_rad / (w_0 * w_0 * general[component])
             bp_transform[1] = general[component] / bw_rad
             bpf[f"ParallelCL{component[1]}"] = bp_transform
             bs_transform[0] = 1 / (bw_rad * general[component])
             bs_transform[1] = (bw_rad * general[component]) / (w_0 * w_0)
-            bsf[f"SeriesLC{component[1]}"] = bs_transform
+            bsf[f"SeriesLC{component[1]}"] = bs_transform   # TODO: double check > should this be "LC" or "CL"?
 
+    # Add the dictionaries for each type to the dictionary of return values
     filter_values["LPF"] = lpf
     filter_values["HPF"] = hpf
     filter_values["BPF"] = bpf
