@@ -21,7 +21,7 @@ def main():
                  "L_bp_series", "C_bp_series", "L_bp_parallel", "C_bp_parallel", 
                  "L_bs_parallel", "C_bs_parallel", "L_bs_series", "C_bs_series"]
     # List of all values tracked by the Butterworth calculators
-    butterworth_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad", "n"]
+    buttershev_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad", "n"]
 
     filter_values = {}
 
@@ -35,7 +35,9 @@ def main():
         1:  Find all transformaitons from known constant-k LPF values
         2:  Find all transformations for a 50-ohm constant-k transmission line
         3:  Find all transformations for any constant-k transmission line
-        4:  Find all transformations for a Butterworth filter\n""")
+        4:  Find all transformations for a Butterworth filter
+        5:  Find all transformations for a Chebyshev filter\n""")
+        
         mode = int(input())
 
         match mode:
@@ -49,8 +51,11 @@ def main():
                 filter_values = calculate.constk(constk_keys_list)
                 text = txt.constk_writer(filter_values)
             case 4:
-                filter_values = calculate.butterworth(butterworth_keys_list)
+                filter_values = calculate.butterworth(buttershev_keys_list)
                 text = txt.butterworth_writer(filter_values)
+            case 5:
+                filter_values = calculate.chebyshev(buttershev_keys_list)
+                text = txt.chebyshev_writer(filter_values)
             # case x: # Find all m-derived components with a variable m-value
                 #This will require a new textwriter method
             # case x: # Find all m-derived components with a variable m-value and characteristic impedance
@@ -59,12 +64,6 @@ def main():
                 #This will require a new textwriter method
             case _:
                 mode = -1
-
-    # w_h = 2/sqrt(LC)
-    # w_0 = 1/sqrt(LC)
-
-    # C = 1/(w_0 * Z_0)
-    # L = Z_0 / w_0
 
     # Table 22.7 gives chebyshev values
             

@@ -64,7 +64,7 @@ def butterworth_writer(filter_values):
 
     text = [
         f"\n#################################################################\n",
-        f"Transformations for a filter with:",
+        f"Transformations for a Butterworth filter with:",
         f"  Cutoff frequency:\t\t\t{filter_values.get('f_0')} Hz",
         f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
         f"  Filter order:\t\t\t\t{filter_values.get('n')}",
@@ -82,6 +82,45 @@ def butterworth_writer(filter_values):
         f"This calculator assumed capacitor-first design. With an even",
         f"filter order, the values will all be the same, but backwards.",
         f"With an odd filter order, the values should be symmetrical.",
+        f"\n#################################################################\n"
+        ]
+    
+    return text
+
+def chebyshev_writer(filter_values):
+    
+    lpf_txt = ""
+    for component in filter_values.get("LPF"):
+        lpf_txt += (f"{component}:\t{filter_values.get('LPF').get(component)}\n")
+    hpf_txt = ""
+    for component in filter_values.get("HPF"):
+        hpf_txt += (f"{component}:\t{filter_values.get('HPF').get(component)}\n")
+    bpf_txt = ""
+    for component in filter_values.get("BPF"):
+        bpf_txt += (f"{component}:\t{filter_values.get('BPF').get(component)[0]}, {filter_values.get('BPF').get(component)[1]}\n")
+    bsf_txt = ""
+    for component in filter_values.get("BSF"):
+        bsf_txt += (f"{component}:\t{filter_values.get('BSF').get(component)[0]}, {filter_values.get('BSF').get(component)[1]}\n")
+
+    text = [
+        f"\n#################################################################\n",
+        f"Transformations for a Chebyshev filter with:",
+        f"  Cutoff frequency:\t\t\t{filter_values.get('f_0')} Hz",
+        f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
+        f"  Filter order:\t\t\t\t{filter_values.get('n')}",
+        f"\n######################### LOWPASS FILTER ########################\n",
+        f"{lpf_txt}",
+        f"######################## HIGHPASS FILTER ########################\n",
+        f"{hpf_txt}",
+        f"######################## BANDPASS FILTER ########################\n",
+        f"Bandwidth (bw_Hz):\t\t\t{filter_values.get('bw_Hz')} Hz",
+        f"{bpf_txt}"
+        f"\n######################## BANDSTOP FILTER ########################\n",
+        f"Bandwidth (bw_Hz):\t\t\t{filter_values.get('bw_Hz')} Hz",
+        f"{bsf_txt}",
+        f"#################################################################\n",
+        f"This calculator assumed capacitor-first design and a ripple of\n" 
+        f"0.5 dB in the passband.\n"
         f"\n#################################################################\n"
         ]
     

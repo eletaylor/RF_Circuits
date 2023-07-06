@@ -246,6 +246,102 @@ def butterworth(keys_list):
     
     return filter_values
 
+# CALCULATES FILTER TRANSFORMATIONS OF A CHEBYSHEV LPF
+def chebyshev(keys_list):
+    
+    filter_values = {}  # Set up the return dictionary
+
+    n = 0
+    possible_n = [3, 5, 7, 9]
+    while n not in possible_n:  # Only let the user input orders that we have prototypes for in Table 22.17
+        n = int(input("Enter the order of the filter n (3-9, odd only):\t"))
+    filter_values["n"] = n
+    filter_values["f_0"] = float(input("Enter the cutoff frequency in Hz:\t\t\t"))
+    filter_values["bw_Hz"] = float(input("Enter the desired bandwidth in Hz:\t\t\t"))
+    filter_values["Z_0"] = float(input("Enter the characteristic impedance in Ohms:\t\t"))
+
+    filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
+    filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
+
+    # Local variables for ease of use
+    w_0 = filter_values.get("w_0")
+    R = filter_values.get("Z_0")
+    bw_rad = filter_values.get("bw_rad")
+    # eps = 0.5   # Arbitrary, related to passband spec. Maybe add user config later. Tables 22.16-22.18 only give 0.1, 0.5, and 1
+
+    # Table 22.17 for 0.5dB ripple
+    lpf_normalized_3 = [1.596, 1.097, 1.596]
+    lpf_normalized_5 = [1.706, 1.230, 2.541, 1.230, 1.706]
+    lpf_normalized_7 = [1.737, 1.258, 2.638, 1.344, 2.638, 1.258, 1.737]
+    lpf_normalized_9 = [1.750, 1.269, 2.668, 1.367, 2.724, 1.367, 2.668, 1.269, 1.750]
+
+    lpf_normalized = []
+    # Choose the correct normalized values for the filter order
+    match n:
+        case 3:
+            lpf_normalized = lpf_normalized_3
+        case 5:
+            lpf_normalized = lpf_normalized_5
+        case 7:
+            lpf_normalized = lpf_normalized_7
+        case 9:
+            lpf_normalized = lpf_normalized_9
+        case _:
+            lpf_normalized = lpf_normalized_3
+
+    # The values given are for capacitor-first design!
+
+    lpf = {}    # component name (string) : component value (float)
+    for k in range(1, n + 1):
+        if (k % 2 == 0):
+            lpf[f"L{k}"] = (lpf_normalized[k-1] * R) / w_0
+        else:
+            lpf[f"C{k}"] = (lpf_normalized[k-1] / R) / w_0
+    
+    # Find the general values for each component to make transformation easier
+    general = {}
+    for component in lpf:
+        general[component] = lpf[component] * w_0
+
+    # Find the other filter values from the general LC values
+    hpf = {}    # component name (string) : component value (float)
+    bpf = {}    # branch name (string) : [component 1 value (float), component 2 value (float)]
+    bsf = {}    # branch name (string) : [component 1 value (float), component 2 value (float)]
+    for component in general:
+        # Add highpass transform value
+        hpf[component] = 1 / (w_0 * general[component])
+        # Each componet turns into 2 for bandpass and bandstop
+        bp_transform = [0,0]
+        bs_transform = [0,0]
+        if (component[0] == "L"): # Bandpass and bandstop transformations for an inductor
+            bp_transform[0] = general[component] / bw_rad
+            bp_transform[1] = bw_rad / (w_0 * w_0 * general[component])
+            bpf[f"SeriesLC{component[1]}"] = bp_transform
+            bs_transform[0] = (bw_rad * general[component]) / (w_0 * w_0)
+            bs_transform[1] = 1 / (bw_rad * general[component])
+            bsf[f"ParallelLC{component[1]}"] = bs_transform
+        else: # Bandpass and bandstop transformations for a capacitor
+            bp_transform[0] = bw_rad / (w_0 * w_0 * general[component])
+            bp_transform[1] = general[component] / bw_rad
+            bpf[f"ParallelCL{component[1]}"] = bp_transform
+            bs_transform[0] = 1 / (bw_rad * general[component])
+            bs_transform[1] = (bw_rad * general[component]) / (w_0 * w_0)
+            bsf[f"SeriesLC{component[1]}"] = bs_transform   # TODO: double check > should this be "LC" or "CL"?
+
+    # Add the dictionaries for each type to the dictionary of return values
+    filter_values["LPF"] = lpf
+    filter_values["HPF"] = hpf
+    filter_values["BPF"] = bpf
+    filter_values["BSF"] = bsf
+
+    # Set any values that didn't get set up to -1 for error checking purposes
+    for key in keys_list:
+        if key in filter_values:
+            continue
+        else:
+            filter_values[key] = -1.0
+    
+    return filter_values
 # If using m-derived sections:
 #   L_1 = (2m/w_1)*R
 #   L_2 = (1-m^2)*R/(2m*w_1)
