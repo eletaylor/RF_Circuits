@@ -5,7 +5,6 @@ def constk_writer(filter_values):
         f"Transformations for a filter with:",
         f"  Cutoff frequency:\t\t\t{filter_values.get('f_0')} Hz",
         f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
-        #f"  m:\t\t\t\t{filter_values.get('m')}",
         f"\n######################### LOWPASS FILTER ########################\n",
         f"Inductor (L_lp):\t\t\t{filter_values.get('L_lp')} H",
         f"Capacitor (C_lp):\t\t\t{filter_values.get('C_lp')} F",

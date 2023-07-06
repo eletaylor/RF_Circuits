@@ -67,32 +67,35 @@ def constk_50ohm(keys_list):
     filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
 
+    w_0 = filter_values.get("w_0")
+    bw_rad = filter_values.get("bw_rad")
+
     # These values are from p 735 in Planar Microwave Engineering
     filter_values["L_lp"] = 15.9155e-9 * (1e9/filter_values.get("f_0")) 
     filter_values["C_lp"] = 6.3662e-12 * (1e9/filter_values.get("f_0"))
     
     # Find the global L and C values for transformation
-    L = filter_values.get("L_lp") * filter_values.get("w_0")
-    C = filter_values.get("C_lp") * filter_values.get("w_0")
+    L = filter_values.get("L_lp") * w_0
+    C = filter_values.get("C_lp") * w_0
 
     # Calculate characteristic impedance
     filter_values["Z_0"] = math.sqrt(L/C) # If we include parasitics, Z_0 = sqrt((R + jwL)/(G + jwC))
 
     # Find the highpass filter values from the global LC
-    filter_values["L_hp"] = 1/(filter_values.get("w_0") * L)
-    filter_values["C_hp"] = 1/(filter_values.get("w_0") * C)
+    filter_values["L_hp"] = 1/(w_0 * L)
+    filter_values["C_hp"] = 1/(w_0 * C)
 
     # Find the bandpass filter values from the global LC
-    filter_values["L_bp_series"] = L/filter_values.get("bw_rad")
-    filter_values["C_bp_series"] = filter_values.get("bw_rad")/(filter_values.get("w_0") * filter_values.get("w_0") * L)
-    filter_values["L_bp_parallel"] = filter_values.get("bw_rad")/(filter_values.get("w_0") * filter_values.get("w_0") * C)
-    filter_values["C_bp_parallel"] = C/filter_values.get("bw_rad")
+    filter_values["L_bp_series"] = L/bw_rad
+    filter_values["C_bp_series"] = bw_rad/(w_0 * w_0 * L)
+    filter_values["L_bp_parallel"] = bw_rad/(w_0 * w_0 * C)
+    filter_values["C_bp_parallel"] = C/bw_rad
 
     # Find the bandstop filter values from the global LC
-    filter_values["L_bs_parallel"] = (filter_values.get("bw_rad") * L) / (filter_values.get("w_0") * filter_values.get("w_0"))
-    filter_values["C_bs_parallel"] = 1/(filter_values.get("bw_rad") * L)
-    filter_values["L_bs_series"] = 1/(filter_values.get("bw_rad") * C)
-    filter_values["C_bs_series"] = (filter_values.get("bw_rad") * C) / (filter_values.get("w_0") * filter_values.get("w_0"))
+    filter_values["L_bs_parallel"] = (bw_rad * L) / (w_0 * w_0)
+    filter_values["C_bs_parallel"] = 1/(bw_rad * L)
+    filter_values["L_bs_series"] = 1/(bw_rad * C)
+    filter_values["C_bs_series"] = (bw_rad * C) / (w_0 * w_0)
 
     # Set any values that didn't get set up to -1 for error checking purposes
     for key in keys_list:

@@ -17,19 +17,19 @@ Capacitor (C_hp):			4.421229843532251e-09 F
 
 ######################## BANDPASS FILTER ########################
 
-Bandwidth (bw_Hz):			100000000.0 Hz
-Series inductor (L_bp_series):		1.5915500000000002e-07 H
-Series capacitor (C_bp_series):		1.9649910415698896e-13 F
-Parallel inductor (L_bp_parallel):	4.912477603924724e-10 H
-Parallel capacitor (C_bp_parallel):	6.366200000000001e-11 F
+Bandwidth (bw_Hz):			200000000.0 Hz
+Series inductor (L_bp_series):		7.957750000000001e-08 H
+Series capacitor (C_bp_series):		3.929982083139779e-13 F
+Parallel inductor (L_bp_parallel):	9.824955207849447e-10 H
+Parallel capacitor (C_bp_parallel):	3.1831000000000004e-11 F
 
 ######################## BANDSTOP FILTER ########################
 
-Bandwidth (bw_Hz):			100000000.0 Hz
-Parallel inductor (L_bs_parallel):	1.9648765432098767e-09 H
-Parallel capacitor (C_bs_parallel):	1.5916427436716105e-11 F
-Series inductor (L_bs_series):		3.9791068591790266e-08 H
-Series capacitor (C_bs_series):		7.859506172839507e-13 F
+Bandwidth (bw_Hz):			200000000.0 Hz
+Parallel inductor (L_bs_parallel):	3.929753086419753e-09 H
+Parallel capacitor (C_bs_parallel):	7.958213718358053e-12 F
+Series inductor (L_bs_series):		1.9895534295895133e-08 H
+Series capacitor (C_bs_series):		1.5719012345679013e-12 F
 
 #################################################################
 
