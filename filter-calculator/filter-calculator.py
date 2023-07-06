@@ -4,7 +4,7 @@
     This is a program to help calculate filter transformation values.
 
     Created:    22 June 2023
-    Modified:    5 July 2023
+    Modified:    6 July 2023
     
 '''
 

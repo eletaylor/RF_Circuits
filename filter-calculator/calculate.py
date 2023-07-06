@@ -4,7 +4,7 @@
     This file acts as a library for different types of filter calculators to be used in filter-calculator.
 
     Created:     5 July 2023
-    Modified:    5 July 2023
+    Modified:    6 July 2023
     
 '''
 
