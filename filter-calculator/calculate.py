@@ -171,8 +171,10 @@ def constk(keys_list):
 def butterworth(keys_list):
     
     filter_values = {}  # Set up the return dictionary
-
-    filter_values["n"] = int(input("Enter the order of the filter n:\t\t"))
+    n = 0
+    possible_n = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    while n not in possible_n:  # Only let the user input orders that we have prototypes for in Table 22.17
+        n = int(input("Enter the order of the filter n (1-9):\t\t"))
     filter_values["f_0"] = float(input("Enter the cutoff frequency in Hz:\t\t"))
     filter_values["bw_Hz"] = float(input("Enter the desired bandwidth in Hz:\t\t"))
     filter_values["Z_0"] = float(input("Enter the characteristic impedance in Ohms:\t"))
@@ -181,25 +183,56 @@ def butterworth(keys_list):
     filter_values["bw_rad"] = filter_values.get("bw_Hz") * 2 * PI
 
     # Local variables for ease of use
-    n = filter_values.get("n")
+    filter_values["n"] = n
     w_0 = filter_values.get("w_0")
     R = filter_values.get("Z_0")
     bw_rad = filter_values.get("bw_rad")
-    b = [0] * n
-    eps = 1   # Arbitrary, related to passband spec. Maybe add user config later.
+    #eps = 1   # Arbitrary, related to passband spec. Maybe add user config later.
 
-    # Find the bk coefficients for the filter, each corresponds to a component.
-    for k in range(1, len(b) + 1):
-        b[k-1] = 2 * (pow(eps, (1.0/n))) * abs(math.sin(((2*(k+1) - 1)*PI)/(2*n)))
+    # Table 22.18 for 1dB ripple
+    lpf_normalized_1 = [2.000]
+    lpf_normalized_2 = [1.414, 1.414]
+    lpf_normalized_3 = [1.000, 2.000, 1.000]
+    lpf_normalized_4 = [0.765, 1.848, 1.848, 0.765]
+    lpf_normalized_5 = [0.618, 1.618, 2.000, 1.618, 0.618]
+    lpf_normalized_6 = [0.518, 1.414, 1.932, 1.932, 1.414, 0.518]
+    lpf_normalized_7 = [0.445, 1.247, 1.802, 2.000, 1.802, 1.247, 0.445]
+    lpf_normalized_8 = [0.390, 1.111, 1.663, 1.962, 1.962, 1.663, 1.111, 0.390]
+    lpf_normalized_9 = [0.347, 1.000, 1.532, 1.879, 2.000, 1.879, 1.532, 1.000, 0.347]
+
+    lpf_normalized = []
+    # Choose the correct normalized values for the filter order
+    match n:
+        case 1:
+            lpf_normalized = lpf_normalized_1
+        case 2:
+            lpf_normalized = lpf_normalized_2
+        case 3:
+            lpf_normalized = lpf_normalized_3
+        case 4:
+            lpf_normalized = lpf_normalized_4
+        case 5:
+            lpf_normalized = lpf_normalized_5
+        case 6:
+            lpf_normalized = lpf_normalized_6
+        case 7:
+            lpf_normalized = lpf_normalized_7
+        case 8:
+            lpf_normalized = lpf_normalized_8
+        case 9:
+            lpf_normalized = lpf_normalized_9
+        case _:
+            lpf_normalized = lpf_normalized_3
 
     # The values given are for capacitor-first design!
-    # Find the LPF values for the Butterworth filter
+
     lpf = {}    # component name (string) : component value (float)
-    for k in range(1, len(b) + 1):
+    # Find the LPF values for the Butterworth filter
+    for k in range(1, n + 1):
         if (k % 2 == 0):
-            lpf[f"L{k}"] = (R * b[k-1]) / w_0
+            lpf[f"L{k}"] = (lpf_normalized[k-1] * R) / w_0
         else:
-            lpf[f"C{k}"] = b[k-1] / (w_0 * R)
+            lpf[f"C{k}"] = (lpf_normalized[k-1] / R) / w_0
     
     # Find the general values for each component to make transformation easier
     general = {}
