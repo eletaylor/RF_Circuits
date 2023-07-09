@@ -261,7 +261,7 @@ def butterworth(keys_list):
             hpf_name = f"L{component[1]}"
             bp_transform[0] = bw_rad / (w_0 * w_0 * general[component])
             bp_transform[1] = general[component] / bw_rad
-            bpf[f"ParallelCL{component[1]}"] = bp_transform
+            bpf[f"ParallelLC{component[1]}"] = bp_transform
             bs_transform[0] = 1 / (bw_rad * general[component])
             bs_transform[1] = (bw_rad * general[component]) / (w_0 * w_0)
             bsf[f"SeriesLC{component[1]}"] = bs_transform   # TODO: double check > should this be "LC" or "CL"?
@@ -369,10 +369,10 @@ def chebyshev(keys_list):
             hpf_name = f"L{component[1]}"
             bp_transform[0] = bw_rad / (w_0 * w_0 * general[component])
             bp_transform[1] = general[component] / bw_rad
-            bpf[f"ParallelCL{component[1]}"] = bp_transform
+            bpf[f"ParallelLC{component[1]}"] = bp_transform
             bs_transform[0] = 1 / (bw_rad * general[component])
             bs_transform[1] = (bw_rad * general[component]) / (w_0 * w_0)
-            bsf[f"SeriesLC{component[1]}"] = bs_transform   # TODO: double check > should this be "LC" or "CL"?
+            bsf[f"SeriesLC{component[1]}"] = bs_transform
         hpf[hpf_name] = 1 / (w_0 * general[component])
 
     # Add the dictionaries for each type to the dictionary of return values
