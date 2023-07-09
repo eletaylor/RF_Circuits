@@ -245,11 +245,12 @@ def butterworth(keys_list):
     bsf = {}    # branch name (string) : [component 1 value (float), component 2 value (float)]
     for component in general:
         # Add highpass transform value
-        hpf[component] = 1 / (w_0 * general[component])
+        hpf_name = ""
         # Each componet turns into 2 for bandpass and bandstop
         bp_transform = [0,0]
         bs_transform = [0,0]
         if (component[0] == "L"): # Bandpass and bandstop transformations for an inductor
+            hpf_name = f"C{component[1]}"
             bp_transform[0] = general[component] / bw_rad
             bp_transform[1] = bw_rad / (w_0 * w_0 * general[component])
             bpf[f"SeriesLC{component[1]}"] = bp_transform
@@ -257,12 +258,14 @@ def butterworth(keys_list):
             bs_transform[1] = 1 / (bw_rad * general[component])
             bsf[f"ParallelLC{component[1]}"] = bs_transform
         else: # Bandpass and bandstop transformations for a capacitor
+            hpf_name = f"L{component[1]}"
             bp_transform[0] = bw_rad / (w_0 * w_0 * general[component])
             bp_transform[1] = general[component] / bw_rad
             bpf[f"ParallelCL{component[1]}"] = bp_transform
             bs_transform[0] = 1 / (bw_rad * general[component])
             bs_transform[1] = (bw_rad * general[component]) / (w_0 * w_0)
             bsf[f"SeriesLC{component[1]}"] = bs_transform   # TODO: double check > should this be "LC" or "CL"?
+        hpf[hpf_name] = 1 / (w_0 * general[component])
 
     # Add the dictionaries for each type to the dictionary of return values
     filter_values["LPF"] = lpf
@@ -350,11 +353,12 @@ def chebyshev(keys_list):
     bsf = {}    # branch name (string) : [component 1 value (float), component 2 value (float)]
     for component in general:
         # Add highpass transform value
-        hpf[component] = 1 / (w_0 * general[component])
+        hpf_name = ""
         # Each componet turns into 2 for bandpass and bandstop
         bp_transform = [0,0]
         bs_transform = [0,0]
         if (component[0] == "L"): # Bandpass and bandstop transformations for an inductor
+            hpf_name = f"C{component[1]}"
             bp_transform[0] = general[component] / bw_rad
             bp_transform[1] = bw_rad / (w_0 * w_0 * general[component])
             bpf[f"SeriesLC{component[1]}"] = bp_transform
@@ -362,12 +366,14 @@ def chebyshev(keys_list):
             bs_transform[1] = 1 / (bw_rad * general[component])
             bsf[f"ParallelLC{component[1]}"] = bs_transform
         else: # Bandpass and bandstop transformations for a capacitor
+            hpf_name = f"L{component[1]}"
             bp_transform[0] = bw_rad / (w_0 * w_0 * general[component])
             bp_transform[1] = general[component] / bw_rad
             bpf[f"ParallelCL{component[1]}"] = bp_transform
             bs_transform[0] = 1 / (bw_rad * general[component])
             bs_transform[1] = (bw_rad * general[component]) / (w_0 * w_0)
             bsf[f"SeriesLC{component[1]}"] = bs_transform   # TODO: double check > should this be "LC" or "CL"?
+        hpf[hpf_name] = 1 / (w_0 * general[component])
 
     # Add the dictionaries for each type to the dictionary of return values
     filter_values["LPF"] = lpf
