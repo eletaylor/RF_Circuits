@@ -186,7 +186,7 @@ def butterworth(keys_list):
     R = filter_values.get("Z_0")
     bw_rad = filter_values.get("bw_rad")
     b = [0] * n
-    eps = 0.5   # Arbitrary, related to passband spec. Maybe add user config later.
+    eps = 1   # Arbitrary, related to passband spec. Maybe add user config later.
 
     # Find the bk coefficients for the filter, each corresponds to a component.
     for k in range(1, len(b) + 1):
@@ -268,12 +268,20 @@ def chebyshev(keys_list):
     R = filter_values.get("Z_0")
     bw_rad = filter_values.get("bw_rad")
     # eps = 0.5   # Arbitrary, related to passband spec. Maybe add user config later. Tables 22.16-22.18 only give 0.1, 0.5, and 1
+    
+    # Table 22.18 for 1dB ripple
+    lpf_normalized_3 = [2.024, 0.994, 2.024]
+    lpf_normalized_5 = [2.135, 1.091, 3.000, 1.091, 2.135]
+    lpf_normalized_7 = [2.167, 1.112, 3.094, 1.174, 3.094, 1.112, 2.167]
+    lpf_normalized_9 = [2.180, 1.119, 3.121, 1.190, 3.175, 1.190, 3.121, 1.119, 2.180]
 
+    '''
     # Table 22.17 for 0.5dB ripple
     lpf_normalized_3 = [1.596, 1.097, 1.596]
     lpf_normalized_5 = [1.706, 1.230, 2.541, 1.230, 1.706]
     lpf_normalized_7 = [1.737, 1.258, 2.638, 1.344, 2.638, 1.258, 1.737]
     lpf_normalized_9 = [1.750, 1.269, 2.668, 1.367, 2.724, 1.367, 2.668, 1.269, 1.750]
+    '''
 
     lpf_normalized = []
     # Choose the correct normalized values for the filter order
