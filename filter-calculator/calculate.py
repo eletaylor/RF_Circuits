@@ -89,8 +89,8 @@ def constk_50ohm(keys_list):
     filter_values["Z_0"] = math.sqrt(L/C) # If we include parasitics, Z_0 = sqrt((R + jwL)/(G + jwC))
 
     # Find the highpass filter values from the global LC
-    filter_values["L_hp"] = 1/(w_0 * L)
-    filter_values["C_hp"] = 1/(w_0 * C)
+    filter_values["L_hp"] = 1/(w_0 * C)
+    filter_values["C_hp"] = 1/(w_0 * L)
 
     # Find the bandpass filter values from the global LC
     filter_values["L_bp_series"] = L/bw_rad
@@ -143,8 +143,8 @@ def constk(keys_list):
     filter_values["Z_0"] = math.sqrt(L/C) # If we include parasitics, Z_0 = sqrt((R + jwL)/(G + jwC))
 
     # Find the highpass filter values from the global LC
-    filter_values["L_hp"] = 1/(w_0 * L)
-    filter_values["C_hp"] = 1/(w_0 * C)
+    filter_values["L_hp"] = 1/(w_0 * C)
+    filter_values["C_hp"] = 1/(w_0 * L)
 
     # Find the bandpass filter values from the global LC
     filter_values["L_bp_series"] = L/bw_rad
