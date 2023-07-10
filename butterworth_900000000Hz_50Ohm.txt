@@ -1,0 +1,42 @@
+
+#################################################################
+
+Transformations for a Butterworth filter with:
+  Cutoff frequency:			900000000.0 Hz
+  Characteristic impedance:		50.0 Ohms
+  Filter order:				3
+
+######################### LOWPASS FILTER ########################
+
+C1:	3.5368808248006085e-12
+L2:	1.768440412400304e-08
+C3:	3.5368808248006085e-12
+
+######################## HIGHPASS FILTER ########################
+
+L1:	8.84220206200152e-09
+C2:	1.7684404124003043e-12
+L3:	8.84220206200152e-09
+
+######################## BANDPASS FILTER ########################
+
+Bandwidth (bw_Hz):			200000000.0 Hz
+ParallelLC1:	1.9649337915558935e-09, 1.5915963711602738e-11
+SeriesLC2:	7.957981855801369e-08, 3.929867583111787e-13
+ParallelLC3:	1.9649337915558935e-09, 1.5915963711602738e-11
+
+######################## BANDSTOP FILTER ########################
+
+Bandwidth (bw_Hz):			200000000.0 Hz
+SeriesLC1:	3.9789909279006844e-08, 7.859735166223574e-13
+ParallelLC2:	3.929867583111787e-09, 7.957981855801369e-12
+SeriesLC3:	3.9789909279006844e-08, 7.859735166223574e-13
+
+#################################################################
+
+This calculator assumed capacitor-first design. With an even
+filter order, the values will all be the same, but backwards.
+With an odd filter order, the values should be symmetrical.
+
+#################################################################
+

@@ -40,7 +40,7 @@ def constk_writer(filter_values):
         f"This calculator gives values for \"core\" components.",
         f"If using T sections for the filter, the parallel capacitors on",
         f"  either end will have half the capacitance of the core ones.",
-        f"If using pi sections for the filter, the seies inductors on",
+        f"If using pi sections for the filter, the series inductors on",
         f"  either end will have half the inductance of the core ones.",
         f"\n#################################################################\n"
         ]
@@ -120,7 +120,7 @@ def chebyshev_writer(filter_values):
         f"{bsf_txt}",
         f"#################################################################\n",
         f"This calculator assumed capacitor-first design and a ripple of\n" 
-        f"0.5 dB in the passband.\n"
+        f"1 dB in the passband.\n"
         f"\n#################################################################\n"
         ]
     
