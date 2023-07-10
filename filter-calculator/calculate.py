@@ -6,12 +6,14 @@
     Author:     Eleanor Taylor
 
     Created:     5 July 2023
-    Modified:    9 July 2023
+    Modified:    10 July 2023
     
 '''
 
 import math
-PI = 3.1415
+PI = 3.14159
+VACUUM_PERMITTIVITY = 8.8542e-12
+C = 3e8
 
 # CALCULATES FILTER TRANSFORMATIONS FROM A KNOWN LOW-PASS FILTER USING CONSTANT-K SECTIONS
 def known_LPF(keys_list):
@@ -392,7 +394,54 @@ def chebyshev(keys_list):
 
 # CALCULATES FILTER VALUES FOR A MICROSTRIP LPF BASED ON ITS CONSTANT-K REALIZATION
 def microstrip_constk(keys_list):   # TODO: IMPLEMENT
+
     filter_values = {}
+
+    filter_values["f_0"] =                      float(input("Enter the cutoff frequency in Hz:\t\t\t"))
+    filter_values["relative_permittivity"] =    float(input("Enter the relative permittivity of the material:\t"))
+    filter_values["Z_0"] =                      float(input("Enter the characteristic impedance in Ohms:\t\t"))
+
+    filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
+
+    # Scale by impedance, the original values from p 735 are for 50 Ohms
+    Z = filter_values.get("Z_0")
+    impedance_ratio = Z / 50.0
+    # These values are from p 735 in Planar Microwave Engineering
+    filter_values["lumped_L_lp"] = 15.9155e-9 * (1e9/filter_values.get("f_0")) * impedance_ratio
+    filter_values["lumped_C_lp"] = 6.3662e-12 * (1e9/filter_values.get("f_0")) / impedance_ratio
+
+    # Add local versions of these for ease of use
+    f_0 = filter_values.get("f_0")
+    #w_0 = filter_values.get("w_0")
+    eps_r = filter_values.get("relative_permittivity")
+    lumped_L_lp = filter_values.get("lumped_L_lp")
+    lumped_C_lp = filter_values.get("lumped_C_lp")
+    v = C / math.sqrt(eps_r)
+    wavelength = v / f_0
+
+    '''
+    lumped_L = filter_values.get("lumped_L_lp") * w_0
+    lumped_C = filter_values.get("lumped_C_lp") * w_0
+    '''
+    
+    # Equations 2 and 3 from p 785 or 8 and 9 from p 787 in Planar Microwave Engineering
+    l_C_deg = lumped_C_lp * v * Z   # Use minimum Z
+    l_L_deg = lumped_L_lp * v / Z   # Use maximum Z
+    l_C = l_C_deg * wavelength * 1000
+    l_L = l_L_deg * wavelength * 1000
+    
+    filter_values["l_C_deg"] = l_C_deg
+    filter_values["l_L_deg"] = l_L_deg
+    filter_values["l_C"] = l_C
+    filter_values["l_L"] = l_L
+
+    # Set any values that didn't get set up to -1 for error checking purposes
+    for key in keys_list:
+        if key in filter_values:
+            continue
+        else:
+            filter_values[key] = -1.0
+
     return filter_values
 
 # CALCULATES FILTER VALUES FOR A 50-OHM TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS

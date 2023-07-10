@@ -1,0 +1,34 @@
+
+#################################################################
+
+Component lengths for a microstrip LPF with
+  Cutoff frequency:			900000000.0 Hz
+  Characteristic impedance:		50.0 Ohms
+  Relative permittivity:		4.0
+
+################# EQUIVALENT LUMPED CIRCUIT #####################
+
+Inductor (L_lp):			1.768388888888889e-08 H
+Capacitor (C_lp):			7.073555555555556e-12 F
+
+############################ LENGTHS ############################
+
+Normalized inductor length (l_L_deg):	0.05305166666666668 deg
+Normalized capacitor length (l_C_deg):	0.05305166666666667 deg
+Physical inductor length (l_L):		8.841944444444445 mm
+Physical capacitor length (l_C):	8.841944444444444 mm
+
+#################################################################
+
+This calculator gives values for "core" components.
+If using T sections for the filter, the capacitors on either end
+  will have half the length of the core ones.
+If using pi sections for the filter, the inductors on either end
+  will have half the length of the core ones.
+Each microstrip filter should have 7 components: 2 half end
+  sections and 5 "core" sections.
+Width is not given. Simply go as wide as possible for capacitors
+  and as thin as possible for inductors.
+
+#################################################################
+

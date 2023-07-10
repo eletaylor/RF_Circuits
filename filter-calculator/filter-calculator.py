@@ -6,7 +6,7 @@
     Author:     Eleanor Taylor
 
     Created:    22 June 2023
-    Modified:    6 July 2023
+    Modified:    10 July 2023
     
 '''
 
@@ -17,13 +17,14 @@ def main():
 
     # List of all values tracked by the constant-k section calculators
     constk_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad",
-                 "L_lp", "C_lp", "L_hp", "C_hp", 
-                 "L_bp_series", "C_bp_series", "L_bp_parallel", "C_bp_parallel", 
-                 "L_bs_parallel", "C_bs_parallel", "L_bs_series", "C_bs_series"]
+                "L_lp", "C_lp", "L_hp", "C_hp", 
+                "L_bp_series", "C_bp_series", "L_bp_parallel", "C_bp_parallel", 
+                "L_bs_parallel", "C_bs_parallel", "L_bs_series", "C_bs_series"]
     # List of all values tracked by the Butterworth and Chebyshev calculators
     buttershev_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad", "n"]
     # List of all values tracked by the microstrip calculators
-    microstrip_keys_list = []
+    microstrip_keys_list = ["relative_permittivity", "Z_0", "f_0", "w_0",
+                "lumped_C_lp", "lumped_L_lp", "l_C_deg", "l_L_deg", "l_C", "l_L"]
 
     filter_values = {}
 

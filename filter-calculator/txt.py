@@ -7,7 +7,7 @@
     Author:     Eleanor Taylor
 
     Created:     5 July 2023
-    Modified:    6 July 2023
+    Modified:    10 July 2023
     
 '''
 
@@ -126,6 +126,33 @@ def chebyshev_writer(filter_values):
     
     return text
 
-def microstrip_writer(filter_values):   # TODO: IMPLEMENT
-    text = ""
+def microstrip_writer(filter_values):
+
+    text = [
+        f"\n#################################################################\n",
+        f"Component lengths for a microstrip LPF with",
+        f"  Cutoff frequency:\t\t\t{filter_values.get('f_0')} Hz",
+        f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
+        f"  Relative permittivity:\t\t{filter_values.get('relative_permittivity')}",
+        f"\n################# EQUIVALENT LUMPED CIRCUIT #####################\n",
+        f"Inductor (L_lp):\t\t\t{filter_values.get('lumped_L_lp')} H",
+        f"Capacitor (C_lp):\t\t\t{filter_values.get('lumped_C_lp')} F",
+        f"\n############################ LENGTHS ############################\n",
+        f"Normalized inductor length (l_L_deg):\t{filter_values.get('l_L_deg')} deg",
+        f"Normalized capacitor length (l_C_deg):\t{filter_values.get('l_C_deg')} deg",
+        f"Physical inductor length (l_L):\t\t{filter_values.get('l_L')} mm",
+        f"Physical capacitor length (l_C):\t{filter_values.get('l_C')} mm",
+        f"\n#################################################################\n",
+        f"This calculator gives values for \"core\" components.",
+        f"If using T sections for the filter, the capacitors on either end",
+        f"  will have half the length of the core ones.",
+        f"If using pi sections for the filter, the inductors on either end",
+        f"  will have half the length of the core ones.",
+        f"Each microstrip filter should have 7 components: 2 half end",
+        f"  sections and 5 \"core\" sections.",
+        f"Width is not given. Simply go as wide as possible for capacitors",
+        f"  and as thin as possible for inductors.",
+        f"\n#################################################################\n"
+        ]
+    
     return text
