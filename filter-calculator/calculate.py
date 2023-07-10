@@ -343,6 +343,11 @@ def chebyshev(keys_list):
     
     return filter_values
 
+# CALCULATES FILTER VALUES FOR A MICROSTRIP LPF BASED ON ITS CONSTANT-K REALIZATION
+def microstrip_constk(keys_list):   # TODO: IMPLEMENT
+    filter_values = {}
+    return filter_values
+
 # CALCULATES FILTER VALUES FOR A 50-OHM TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS
 def msections_50ohm(keys_list): #TODO: IMPLEMENT
 

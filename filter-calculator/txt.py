@@ -125,3 +125,7 @@ def chebyshev_writer(filter_values):
         ]
     
     return text
+
+def microstrip_writer(filter_values):   # TODO: IMPLEMENT
+    text = ""
+    return text
