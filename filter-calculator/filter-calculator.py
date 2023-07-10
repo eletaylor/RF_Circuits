@@ -20,8 +20,10 @@ def main():
                  "L_lp", "C_lp", "L_hp", "C_hp", 
                  "L_bp_series", "C_bp_series", "L_bp_parallel", "C_bp_parallel", 
                  "L_bs_parallel", "C_bs_parallel", "L_bs_series", "C_bs_series"]
-    # List of all values tracked by the Butterworth calculators
+    # List of all values tracked by the Butterworth and Chebyshev calculators
     buttershev_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad", "n"]
+    # List of all values tracked by the microstrip calculators
+    microstrip_keys_list = []
 
     filter_values = {}
 
@@ -37,7 +39,8 @@ def main():
         2:  Find all transformations for a 50-ohm constant-k transmission line
         3:  Find all transformations for any constant-k transmission line
         4:  Find all transformations for a Butterworth filter
-        5:  Find all transformations for a Chebyshev filter\n""")
+        5:  Find all transformations for a Chebyshev filter
+        6:  Find microstrip component lengths for a constant-k LPF\n""")
         
         mode = int(input())
         mode_string = ""
@@ -63,8 +66,10 @@ def main():
                 filter_values = calculate.chebyshev(buttershev_keys_list)
                 text = txt.chebyshev_writer(filter_values)
                 mode_string = "chebyshev"
-            #case 6: # Find all values for a microstrip-based circuit
-                #This will require a new textwriter method
+            case 6:
+                filter_values = calculate.microstrip_constk(microstrip_keys_list)
+                text = txt.microstrip_writer(filter_values)
+                mode_string = "microstrip_constk"
             # case x: # Find all m-derived components with a variable m-value
                 #This will require a new textwriter method
             # case x: # Find all m-derived components with a variable m-value and characteristic impedance
