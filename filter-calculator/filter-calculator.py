@@ -25,9 +25,6 @@ def main():
     # List of all values tracked by the microstrip calculator
     microstrip_keys_list = ["relative_permittivity", "Z_0", "f_0", "w_0",
                             "lumped_C_lp", "lumped_L_lp", "l_C_deg", "l_L_deg", "l_C", "l_L"]
-    # List of all values tracked by the microstrip TEM calculator
-    microstrip_TEM_keys_list =  ["relative_permittivity", "effective_permittivity", 
-                                 "Z_0", "S", "W", "k", "k'"]
     # List of all values tracked by the CPW calculators
     cpw_TEM_keys_list = ["relative_permittivity", "effective_permittivity", 
                          "Z_0", "W", "H"]
@@ -47,8 +44,7 @@ def main():
         4:  Find all transformations for a Butterworth filter
         5:  Find all transformations for a Chebyshev filter
         6:  Find microstrip component lengths for a constant-k LPF
-        7:  Find a microstrip TEM with a given characteristic impedance
-        8:  Find a coplanar waveguide TEM with a given characteristic impedance\n""")
+        7:  Find a coplanar waveguide TEM with a given characteristic impedance\n""")
         
         mode = int(input())
         mode_string = ""
@@ -79,10 +75,6 @@ def main():
                 text = txt.microstrip_writer(filter_values)
                 mode_string = "microstrip_constk"
             case 7:
-                filter_values = calculate.microstrip_TEM(microstrip_TEM_keys_list)
-                text = txt.microstrip_TEM_writer(filter_values)
-                mode_string = "microstrip_TEM"
-            case 8:
                 filter_values = calculate.cpw_TEM(cpw_TEM_keys_list)
                 text = txt.cpw_TEM_writer(filter_values)
                 mode_string = "cpw_TEM"

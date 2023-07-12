@@ -6,14 +6,17 @@
     Author:     Eleanor Taylor
 
     Created:     5 July 2023
-    Modified:    10 July 2023
+    Modified:    12 July 2023
     
 '''
 
 import math
+
 PI = 3.14159
 VACUUM_PERMITTIVITY = 8.8542e-12
+VACUUM_PERMEABILITY = 12.566e-7
 C = 3e8
+ETA = VACUUM_PERMEABILITY * C
 
 # CALCULATES FILTER TRANSFORMATIONS FROM A KNOWN LOW-PASS FILTER USING CONSTANT-K SECTIONS
 def known_LPF(keys_list):
@@ -444,12 +447,7 @@ def microstrip_constk(keys_list):   # TODO: IMPLEMENT
 
     return filter_values
 
-# CALCULATES THE WIDTH AND OTHER PARAMETERS OF A MICROSTRIP TEM
-def microstrip_TEM(keys_list):  #TODO: IMPLEMENT
-    filter_values = {}
-    return filter_values
-
-# CALCULATES THE WIDTH AND OTHER PARAMETERS OF A MICROSTRIP TEM
+# CALCULATES THE WIDTH AND OTHER PARAMETERS OF A MICROSTRIP CPW TEM
 def cpw_TEM(keys_list):  #TODO: IMPLEMENT
     filter_values = {}
     return filter_values

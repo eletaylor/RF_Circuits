@@ -7,7 +7,7 @@
     Author:     Eleanor Taylor
 
     Created:     5 July 2023
-    Modified:    10 July 2023
+    Modified:    12 July 2023
     
 '''
 
@@ -155,10 +155,6 @@ def microstrip_writer(filter_values):
         f"\n#################################################################\n"
         ]
     
-    return text
-
-def microstrip_TEM_writer(filter_values):   #TODO: IMPLEMENT
-    text = []
     return text
 
 def cpw_TEM_writer(filter_values):   #TODO: IMPLEMENT
