@@ -6,7 +6,7 @@
     Author:     Eleanor Taylor
 
     Created:    22 June 2023
-    Modified:    10 July 2023
+    Modified:    12 July 2023
     
 '''
 
@@ -22,10 +22,15 @@ def main():
                 "L_bs_parallel", "C_bs_parallel", "L_bs_series", "C_bs_series"]
     # List of all values tracked by the Butterworth and Chebyshev calculators
     buttershev_keys_list = ["f_0", "w_0", "Z_0", "bw_Hz", "bw_rad", "n"]
-    # List of all values tracked by the microstrip calculators
+    # List of all values tracked by the microstrip calculator
     microstrip_keys_list = ["relative_permittivity", "Z_0", "f_0", "w_0",
-                "lumped_C_lp", "lumped_L_lp", "l_C_deg", "l_L_deg", "l_C", "l_L"]
-
+                            "lumped_C_lp", "lumped_L_lp", "l_C_deg", "l_L_deg", "l_C", "l_L"]
+    # List of all values tracked by the microstrip TEM calculator
+    microstrip_TEM_keys_list =  ["relative_permittivity", "effective_permittivity", 
+                                 "Z_0", "S", "W", "k", "k'"]
+    # List of all values tracked by the CPW calculators
+    cpw_TEM_keys_list = ["relative_permittivity", "effective_permittivity", 
+                         "Z_0", "W", "H"]
     filter_values = {}
 
     print ("\n#######################################################################")
@@ -41,7 +46,9 @@ def main():
         3:  Find all transformations for any constant-k transmission line
         4:  Find all transformations for a Butterworth filter
         5:  Find all transformations for a Chebyshev filter
-        6:  Find microstrip component lengths for a constant-k LPF\n""")
+        6:  Find microstrip component lengths for a constant-k LPF
+        7:  Find a microstrip TEM with a given characteristic impedance
+        8:  Find a coplanar waveguide TEM with a given characteristic impedance\n""")
         
         mode = int(input())
         mode_string = ""
@@ -71,6 +78,14 @@ def main():
                 filter_values = calculate.microstrip_constk(microstrip_keys_list)
                 text = txt.microstrip_writer(filter_values)
                 mode_string = "microstrip_constk"
+            case 7:
+                filter_values = calculate.microstrip_TEM(microstrip_TEM_keys_list)
+                text = txt.microstrip_TEM_writer(filter_values)
+                mode_string = "microstrip_TEM"
+            case 8:
+                filter_values = calculate.cpw_TEM(cpw_TEM_keys_list)
+                text = txt.cpw_TEM_writer(filter_values)
+                mode_string = "cpw_TEM"
             # case x: # Find all m-derived components with a variable m-value
                 #This will require a new textwriter method
             # case x: # Find all m-derived components with a variable m-value and characteristic impedance

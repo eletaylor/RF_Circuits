@@ -156,3 +156,11 @@ def microstrip_writer(filter_values):
         ]
     
     return text
+
+def microstrip_TEM_writer(filter_values):   #TODO: IMPLEMENT
+    text = []
+    return text
+
+def cpw_TEM_writer(filter_values):   #TODO: IMPLEMENT
+    text = []
+    return text

@@ -444,6 +444,16 @@ def microstrip_constk(keys_list):   # TODO: IMPLEMENT
 
     return filter_values
 
+# CALCULATES THE WIDTH AND OTHER PARAMETERS OF A MICROSTRIP TEM
+def microstrip_TEM(keys_list):  #TODO: IMPLEMENT
+    filter_values = {}
+    return filter_values
+
+# CALCULATES THE WIDTH AND OTHER PARAMETERS OF A MICROSTRIP TEM
+def cpw_TEM(keys_list):  #TODO: IMPLEMENT
+    filter_values = {}
+    return filter_values
+
 # CALCULATES FILTER VALUES FOR A 50-OHM TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS
 def msections_50ohm(keys_list): #TODO: IMPLEMENT
 
