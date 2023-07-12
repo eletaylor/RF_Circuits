@@ -25,9 +25,9 @@ def main():
     # List of all values tracked by the microstrip calculator
     microstrip_keys_list = ["relative_permittivity", "Z_0", "f_0", "w_0",
                             "lumped_C_lp", "lumped_L_lp", "l_C_deg", "l_L_deg", "l_C", "l_L"]
-    # List of all values tracked by the CPW calculators
+    # List of all values tracked by the CPW calculator
     cpw_TEM_keys_list = ["relative_permittivity", "effective_permittivity", 
-                         "Z_0", "W", "H"]
+                         "Z_0", "W", "S", "k"]
     filter_values = {}
 
     print ("\n#######################################################################")

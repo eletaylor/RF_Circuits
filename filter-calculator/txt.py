@@ -157,6 +157,27 @@ def microstrip_writer(filter_values):
     
     return text
 
-def cpw_TEM_writer(filter_values):   #TODO: IMPLEMENT
-    text = []
+def cpw_TEM_writer(filter_values):
+
+    table = ""
+    for W in filter_values.get('S'):
+        table += f"\t\t{W}\t\t{filter_values.get('S').get('W')}"
+
+    text = [
+        f"\n#################################################################\n",
+        f"Component lengths for a coplanar waveguide microstrip TEM with",
+        f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
+        f"  Relative permittivity:\t\t{filter_values.get('relative_permittivity')}",
+        f"\n#################################################################\n",
+        f"k:\t\t\t{filter_values.get('k')}",
+        f"Effective permittivity:\t{filter_values.get('effective_permittivity')}",
+        f"\n#################################################################\n",
+        f"The k value given satisfies the equation:",
+        f"      k = W / (W+2S)",
+        f"Which is evaluated here at several values of W for convenience.",
+        f"\n#################################################################\n",
+        f"\t\tW (mm)\t\tS(mm)",
+        f"{table}",
+        f"\n#################################################################\n"
+        ]
     return text

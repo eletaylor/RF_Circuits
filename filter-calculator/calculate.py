@@ -448,8 +448,46 @@ def microstrip_constk(keys_list):   # TODO: IMPLEMENT
     return filter_values
 
 # CALCULATES THE WIDTH AND OTHER PARAMETERS OF A MICROSTRIP CPW TEM
-def cpw_TEM(keys_list):  #TODO: IMPLEMENT
+def cpw_TEM(keys_list):
+
     filter_values = {}
+
+    '''
+    Equations here are from lecture notes and:
+    https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Microwave_and_RF_Design_II_-_Transmission_Lines_(Steer)/03%3A_Planar_Transmission_Lines/3.08%3A_Co-Planar_Waveguide
+    '''
+
+    Z_0 = float(input("Enter the characteristic impedance in Ohms:\t"))
+
+    relative_permittivity = 4.5
+    effective_permittivity = (relative_permittivity + 1) * 0.5
+
+    alpha = 0.5 * math.exp((Z_0 * 4 * PI * math.sqrt(effective_permittivity))/ETA)
+
+    k_prime = pow((alpha - 1)/(alpha + 1), 2)
+
+    k = math.sqrt(1 - pow(k_prime, 2))
+
+    widths = [50, 100, 200] # Since we're left with two unknowns, it's helpful to evaluate at some known values
+    spaces = {}
+
+    for W in widths:
+        spaces[W] = (W - (k * W)) / (k * 2)
+
+    filter_values["Z_0"] = Z_0
+    filter_values["relative_permittivity"] = relative_permittivity
+    filter_values["effective_permittivity"] = effective_permittivity
+    filter_values["W"] = widths
+    filter_values["S"] = spaces
+    filter_values["k"] = k
+
+    # Set any values that didn't get set up to -1 for error checking purposes
+    for key in keys_list:
+        if key in filter_values:
+            continue
+        else:
+            filter_values[key] = -1.0
+
     return filter_values
 
 # CALCULATES FILTER VALUES FOR A 50-OHM TRANSMISSION-LINE FILTER WITH M-DERIVED SECTIONS
