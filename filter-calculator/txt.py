@@ -161,7 +161,7 @@ def cpw_TEM_writer(filter_values):
 
     table = ""
     for W in filter_values.get('S'):
-        table += f"\t\t{W}\t\t{filter_values.get('S').get(f'{W}')}"
+        table += f"\t\t{W}\t\t{filter_values.get('S').get(W)}\n"
 
     text = [
         f"\n#################################################################\n",
@@ -173,11 +173,12 @@ def cpw_TEM_writer(filter_values):
         f"Effective permittivity:\t{filter_values.get('effective_permittivity')}",
         f"\n#################################################################\n",
         f"The k value given satisfies the equation:",
-        f"      k = W / (W+2S)",
-        f"Which is evaluated here at several values of W for convenience.",
+        f"      k = W / (W + 2*S)",
+        f"which is evaluated here at several values of W for convenience.",
         f"\n#################################################################\n",
-        f"\t\tW (mm)\t\tS(mm)",
+        f"\t\tW (mm)\t\tS (mm)",
         f"{table}",
-        f"\n#################################################################\n"
+        f"#################################################################\n"
         ]
+    
     return text

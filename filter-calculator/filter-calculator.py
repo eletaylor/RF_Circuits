@@ -90,7 +90,7 @@ def main():
 
     save = (input("Save to text file? (y/n)\t")).lower()    # Ask if the user wants to save their data
     if (save[0] == "y"):
-        filename = f"{mode_string}_{int(filter_values.get('f_0'))}Hz_{int(filter_values.get('Z_0'))}Ohm.txt"
+        filename = f"{mode_string}_{int(filter_values.get('Z_0'))}Ohm.txt"
         with open(filename, 'w+', newline= '') as textfile:
             for line in text:
                 textfile.write(line)    # Print each line to the text file
