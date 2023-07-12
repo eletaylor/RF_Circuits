@@ -28,7 +28,6 @@ def main():
     # List of all values tracked by the CPW calculator
     cpw_TEM_keys_list = ["relative_permittivity", "effective_permittivity", 
                          "Z_0", "W", "S", "k"]
-    filter_values = {}
 
     print ("\n#######################################################################")
     print ("\nWELCOME TO FILTER CALCULATOR - Your one-stop shop for all filter needs!")

@@ -161,7 +161,7 @@ def cpw_TEM_writer(filter_values):
 
     table = ""
     for W in filter_values.get('S'):
-        table += f"\t\t{W}\t\t{filter_values.get('S').get('W')}"
+        table += f"\t\t{W}\t\t{filter_values.get('S').get(f'{W}')}"
 
     text = [
         f"\n#################################################################\n",
