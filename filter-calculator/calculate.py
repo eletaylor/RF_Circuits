@@ -468,7 +468,7 @@ def cpw_TEM(keys_list):
 
     k = math.sqrt(1 - pow(k_prime, 2))
 
-    widths = [10, 20, 30, 40, 50, 75, 100, 150, 200] # Since we're left with two unknowns, it's helpful to evaluate at some known values
+    widths = [3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 10, 20, 30, 40, 50, 75, 100, 150, 200] # Since we're left with two unknowns, it's helpful to evaluate at some known values
     spaces = {}
 
     for W in widths:
