@@ -194,7 +194,7 @@ def butterworth(keys_list):
     bw_rad = filter_values.get("bw_rad")
     #eps = 1   # Arbitrary, related to passband spec. Maybe add user config later.
 
-    # Table 22.18 for 1dB ripple
+    # Table 22.15
     lpf_normalized_1 = [2.000]
     lpf_normalized_2 = [1.414, 1.414]
     lpf_normalized_3 = [1.000, 2.000, 1.000]
