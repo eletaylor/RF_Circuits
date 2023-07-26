@@ -396,7 +396,7 @@ def chebyshev(keys_list):
     return filter_values
 
 # CALCULATES FILTER VALUES FOR A MICROSTRIP LPF BASED ON ITS CONSTANT-K REALIZATION
-def microstrip_constk(keys_list):   # TODO: IMPLEMENT
+def microstrip_constk(keys_list):
 
     filter_values = {}
 
