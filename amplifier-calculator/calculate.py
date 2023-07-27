@@ -20,7 +20,7 @@ PI = 3.14159
 #ETA = VACUUM_PERMEABILITY * C
 
 # CALCULATES POSSIBLE VALUES FOR A TUNED AMPLIFIER
-def tuned(keys_list): # TODO: IMPLEMENT
+def tuned(keys_list):
 
     amplifier = {}  # Set up the return dictionary
 
@@ -69,4 +69,9 @@ def tuned(keys_list): # TODO: IMPLEMENT
         else:
             amplifier[key] = -1.0
     
+    return amplifier
+
+# CALCULATES POSSIBLE VALUES FOR A FEEDBACK AMPLIFIER
+def feedback(keys_list):    # TODO: IMPLEMENT
+    amplifier = {}
     return amplifier

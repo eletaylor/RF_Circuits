@@ -33,3 +33,26 @@ def tuned_writer(amplifier):
         ]
     
     return text
+
+def feedback_writer(amplifier):     #TODO: IMPLEMENT!
+
+    table_lines = ""
+    for i in range(len(amplifier.get("L")) - 1):
+        L = amplifier.get("L")[i]
+        C = amplifier.get("C")[i]
+        R = amplifier.get("R")[i]
+        table_lines += (f"\t{L}\t\t{C}\t{R}\n")
+
+    text = [
+        f"\n##########################################################################\n",
+        f"Values for a feedback amplifier with:",
+        f"  Center frequency:\t{amplifier.get('f_r')} Hz",
+        f"  Bandwidth:\t\t{amplifier.get('bw')} Hz",
+        f"  Quality factor:\t{amplifier.get('Q')}\n",
+        f"##########################################################################\n",
+        f"\tL (H)\t\tC (F)\t\tR (Ohms)",
+        f"{table_lines}",
+        f"\n##########################################################################\n"
+        ]
+    
+    return text

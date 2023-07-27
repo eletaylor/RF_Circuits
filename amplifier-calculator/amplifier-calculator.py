@@ -37,7 +37,11 @@ def main():
             case 1:
                 amplifier = calculate.tuned(keys_list)
                 text = txt.tuned_writer(amplifier)
-                mode_string = "tuned_amplifier"
+                mode_string = f"tuned_amplifier_{int(amplifier.get('f_r'))}Hz"
+            case 2:
+                amplifier = calculate.feedback(keys_list)
+                text = txt.feedback_writer(amplifier)
+                mode_string = "feedback_amplifier"
             case _:
                 mode = -1
 
