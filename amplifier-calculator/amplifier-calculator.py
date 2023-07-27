@@ -15,7 +15,7 @@ import calculate
 
 def main():
 
-    keys_list = ["f_r", "w_r", "bw", "bw_rad", "Q", "L", "C", "R"]
+    keys_list = ["f_r", "w_r", "bw", "bw_rad", "Q", "L", "C", "R_E", "R_C", "gain_dB"]
 
     print ("\n################################################################################")
     print ("\nWELCOME TO AMPLIFIER CALCULATOR - Your one-stop shop for all RF amplifier needs!")

@@ -14,22 +14,25 @@
 def tuned_writer(amplifier):
 
     table_lines = ""
-    for i in range(len(amplifier.get("L")) - 1):
-        L = amplifier.get("L")[i]
-        C = amplifier.get("C")[i]
-        R = amplifier.get("R")[i]
-        table_lines += (f"\t{L}\t\t{C}\t{R}\n")
+    for i in range(len(amplifier.get("R_C"))):
+        L = "{:.2e}".format(amplifier.get("L")[i])
+        C = "{:.2e}".format(amplifier.get("C")[i])
+        R_E = int(amplifier.get("R_E")[i])
+        R_C = int(amplifier.get("R_C")[i])
+        
+        table_lines += (f"\t{R_C}\t\t{R_E}\t\t{L}\t{C}\n")
 
     text = [
         f"\n##########################################################################\n",
         f"Values for a tuned amplifier with:",
         f"  Center frequency:\t{amplifier.get('f_r')} Hz",
         f"  Bandwidth:\t\t{amplifier.get('bw')} Hz",
-        f"  Quality factor:\t{amplifier.get('Q')}\n",
+        f"  Quality factor:\t{amplifier.get('Q')}",
+        f"  Decibel gain:\t\t{amplifier.get('gain_dB')}\n",
         f"##########################################################################\n",
-        f"\tL (H)\t\tC (F)\t\tR (Ohms)",
+        f"\tRc (Ohms)\tRe (Ohms)\tL (H)\t\tC (F)",
         f"{table_lines}",
-        f"\n##########################################################################\n"
+        f"##########################################################################\n"
         ]
     
     return text
@@ -37,11 +40,6 @@ def tuned_writer(amplifier):
 def feedback_writer(amplifier):     #TODO: IMPLEMENT!
 
     table_lines = ""
-    for i in range(len(amplifier.get("L")) - 1):
-        L = amplifier.get("L")[i]
-        C = amplifier.get("C")[i]
-        R = amplifier.get("R")[i]
-        table_lines += (f"\t{L}\t\t{C}\t{R}\n")
 
     text = [
         f"\n##########################################################################\n",
@@ -50,7 +48,6 @@ def feedback_writer(amplifier):     #TODO: IMPLEMENT!
         f"  Bandwidth:\t\t{amplifier.get('bw')} Hz",
         f"  Quality factor:\t{amplifier.get('Q')}\n",
         f"##########################################################################\n",
-        f"\tL (H)\t\tC (F)\t\tR (Ohms)",
         f"{table_lines}",
         f"\n##########################################################################\n"
         ]
