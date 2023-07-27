@@ -64,12 +64,12 @@ def tuned(keys_list):
     amplifier["R_E"] = RE
     amplifier["R_C"] = RC
 
-    # Set any values that didn't get set up to -1 for error checking purposes
+    # Set any values that didn't get set up error checking purposes
     for key in keys_list:
         if key in amplifier:
             continue
         else:
-            amplifier[key] = -1.0
+            amplifier[key] = "ERROR"
     
     return amplifier
 
@@ -81,9 +81,13 @@ def feedback(keys_list):    # TODO: IMPLEMENT
     print("\n")
 
     # Prompt user for input
-    f_r = float(input("Enter the center frequency in Hz:\t"))
-    bw = float(input("Enter the bandwidth in Hz:\t\t"))
+    f_0 = float(input("Enter the center frequency in Hz:\t"))
+    gain_dB = float(input("Enter the gain of the amplifier in dB:\t"))
+    Vdd = float(input("Enter the supply voltage in V:\t"))
 
-    # Gain of Adb at a frequency f_0 with a power supply Vdd.
+    #R_L > need a load and source impedance
+    
+
+
 
     return amplifier

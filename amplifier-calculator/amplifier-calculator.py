@@ -25,7 +25,7 @@ def main():
     
     while (mode < 1):
 
-        print ("""\nWhich version of the calculator do you want?
+        print ("""Which version of the calculator do you want?
         1:  Find values for a tuned amplifier
         2:  Find values for a feedback amplifier [COMING SOON!]
         3:  Find values for a general BJT amplifier [COMING SOON!]\n""")
