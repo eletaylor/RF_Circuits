@@ -162,15 +162,43 @@ def microstrip_butterworth_writer(filter_values):
     lpf_vals_txt = ""
     for component in filter_values.get("LPF_values"):
         x = "{:.2e}".format(filter_values.get('LPF_values').get(component))
-        lpf_vals_txt += (f"\t{component}:\t{x}\n")
+        lpf_vals_txt += (f"\t{component}:\t\t{x}\n")
     lpf_lens_txt = ""
     for component in filter_values.get("LPF_lengths"):
         x = "{:.2e}".format(filter_values.get('LPF_lengths').get(component))
-        lpf_lens_txt += (f"\t{component}:\t{x}\n")
+        lpf_lens_txt += (f"\t{component}:\t\t{x}\n")
 
     text = [
         f"\n#################################################################\n",
         f"Component lengths for a microstrip butterworth LPF with",
+        f"  Cutoff frequency:\t\t\t{filter_values.get('f_0')} Hz",
+        f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
+        f"  Relative permittivity:\t\t{filter_values.get('relative_permittivity')}",
+        f"\n################# EQUIVALENT LUMPED CIRCUIT #####################\n",
+        f"\tComponent\tValue",
+        f"{lpf_vals_txt}",
+        f"############################ LENGTHS ############################\n",
+        f"\tComponent\tValue",
+        f"{lpf_lens_txt}",
+        f"#################################################################\n"
+        ]
+    
+    return text
+
+def microstrip_chebyshev_writer(filter_values):
+
+    lpf_vals_txt = ""
+    for component in filter_values.get("LPF_values"):
+        x = "{:.2e}".format(filter_values.get('LPF_values').get(component))
+        lpf_vals_txt += (f"\t{component}:\t\t{x}\n")
+    lpf_lens_txt = ""
+    for component in filter_values.get("LPF_lengths"):
+        x = "{:.2e}".format(filter_values.get('LPF_lengths').get(component))
+        lpf_lens_txt += (f"\t{component}:\t\t{x}\n")
+
+    text = [
+        f"\n#################################################################\n",
+        f"Component lengths for a microstrip Chebyshev LPF with",
         f"  Cutoff frequency:\t\t\t{filter_values.get('f_0')} Hz",
         f"  Characteristic impedance:\t\t{filter_values.get('Z_0')} Ohms",
         f"  Relative permittivity:\t\t{filter_values.get('relative_permittivity')}",

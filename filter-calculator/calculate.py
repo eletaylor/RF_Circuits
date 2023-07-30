@@ -447,7 +447,7 @@ def microstrip_constk(keys_list):
 
     return filter_values
 
-# CALCULATES FILTER VALUES FOR A MICROSTRIP LPF BASED ON ITS CONSTANT-K REALIZATION
+# CALCULATES FILTER VALUES FOR A MICROSTRIP LPF BASED ON ITS BUTTERWORTH REALIZATION
 def microstrip_butterworth(keys_list):
 
     filter_values = {}  # Set up the return dictionary
@@ -501,6 +501,82 @@ def microstrip_butterworth(keys_list):
             lpf_normalized = lpf_normalized_7
         case 8:
             lpf_normalized = lpf_normalized_8
+        case 9:
+            lpf_normalized = lpf_normalized_9
+        case _:
+            lpf_normalized = lpf_normalized_3
+
+    # The values given are for capacitor-first design!
+
+    lpf = {}    # component name (string) : component value (float)
+    # Find the LPF values for the Butterworth filter
+    for k in range(1, n + 1):
+        if (k % 2 == 0):
+            lpf[f"L{k}"] = (lpf_normalized[k-1] * R) / w_0
+        else:
+            lpf[f"C{k}"] = (lpf_normalized[k-1] / R) / w_0
+
+    v = C / math.sqrt(eps_r)
+
+    wavelength = v / f_0
+
+    lpf_lengths = {}
+    for component in lpf:
+        if component[0] == "L":
+            lpf_lengths[f"{component}"] = (lpf.get(component) * v * R) * wavelength * 1000
+        else:   # If capacitor
+            lpf_lengths[f"{component}"] = (lpf.get(component) * v / R) * wavelength * 1000
+
+    filter_values["LPF_lengths"] = lpf_lengths
+    filter_values["LPF_values"] = lpf
+
+    # Set any values that didn't get set up to -1 for error checking purposes
+    for key in keys_list:
+        if key in filter_values:
+            continue
+        else:
+            filter_values[key] = -1.0
+
+    return filter_values
+
+def microstrip_chebyshev(keys_list):
+
+    filter_values = {}  # Set up the return dictionary
+
+    n = 0
+    possible_n = [3, 5, 7, 9]
+    while n not in possible_n:  # Only let the user input orders that we have prototypes for in Table 22.17
+        n = int(input("Enter the order of the filter n (1-9):\t\t\t"))
+
+    filter_values["f_0"] = float(input("Enter the cutoff frequency in Hz:\t\t\t"))
+    filter_values["Z_0"] = float(input("Enter the characteristic impedance in Ohms:\t\t"))
+    filter_values["relative_permittivity"] = float(input("Enter the relative permittivity of the material:\t"))
+
+    filter_values["w_0"] = filter_values.get("f_0") * 2 * PI
+
+    # Local variables for ease of use
+    filter_values["n"] = n
+    f_0 = filter_values.get("f_0")
+    w_0 = filter_values.get("w_0")
+    R = filter_values.get("Z_0")
+    eps_r = filter_values.get("relative_permittivity")
+
+    # Table 22.18 for 1dB ripple
+    lpf_normalized_3 = [2.024, 0.994, 2.024]
+    lpf_normalized_5 = [2.135, 1.091, 3.000, 1.091, 2.135]
+    lpf_normalized_7 = [2.167, 1.112, 3.094, 1.174, 3.094, 1.112, 2.167]
+    lpf_normalized_9 = [2.180, 1.119, 3.121, 1.190, 3.175, 1.190, 3.121, 1.119, 2.180]
+
+    lpf_normalized = []
+
+    # Choose the correct normalized values for the filter order
+    match n:
+        case 3:
+            lpf_normalized = lpf_normalized_3
+        case 5:
+            lpf_normalized = lpf_normalized_5
+        case 7:
+            lpf_normalized = lpf_normalized_7
         case 9:
             lpf_normalized = lpf_normalized_9
         case _:

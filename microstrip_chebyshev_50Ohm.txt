@@ -1,7 +1,7 @@
 
 #################################################################
 
-Component lengths for a microstrip butterworth LPF with
+Component lengths for a microstrip Chebyshev LPF with
   Cutoff frequency:			900000000.0 Hz
   Characteristic impedance:		50.0 Ohms
   Relative permittivity:		4.0
@@ -9,16 +9,16 @@ Component lengths for a microstrip butterworth LPF with
 ################# EQUIVALENT LUMPED CIRCUIT #####################
 
 	Component	Value
-	C1:		3.54e-12
-	L2:		1.77e-08
-	C3:		3.54e-12
+	C1:		7.16e-12
+	L2:		8.79e-09
+	C3:		7.16e-12
 
 ############################ LENGTHS ############################
 
 	Component	Value
-	C1:		1.77e-03
-	L2:		2.21e+04
-	C3:		1.77e-03
+	C1:		3.58e-03
+	L2:		1.10e+04
+	C3:		3.58e-03
 
 #################################################################
 
