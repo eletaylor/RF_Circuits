@@ -1,0 +1,24 @@
+
+#################################################################
+
+Component lengths for a microstrip Chebyshev LPF with
+  Cutoff frequency:			900000000.0 Hz
+  Characteristic impedance:		50.0 Ohms
+  Relative permittivity:		4.0
+
+################# EQUIVALENT LUMPED CIRCUIT #####################
+
+	Component	Value
+	C1:		7.16e-12
+	L2:		8.79e-09
+	C3:		7.16e-12
+
+############################ LENGTHS ############################
+
+	Component	Value
+	C1:		3.58e-03
+	L2:		1.10e+04
+	C3:		3.58e-03
+
+#################################################################
+

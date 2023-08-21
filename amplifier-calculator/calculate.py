@@ -47,7 +47,7 @@ def tuned(keys_list):
     # Loop over the resistances to calculate values for the other components
     for i in range(len(RC)):
         C[i] = 1/(RC[i] * bw_rad)
-        L[i] = pow(1/(w_r), 2) / C[i]
+        L[i] = lc_product / C[i]
         RE[i] = 1/(C[i] * gain_V * bw_rad)
 
     # Add values to the dictionary

@@ -43,7 +43,9 @@ def main():
         4:  Find all transformations for a Butterworth filter
         5:  Find all transformations for a Chebyshev filter
         6:  Find microstrip component lengths for a constant-k LPF
-        7:  Find a coplanar waveguide TEM with a given characteristic impedance\n""")
+        7:  Find microstrip component lengths for a Butterworth LPF
+        8:  Find microstrip component lengths for a Chebyshev LPF
+        9:  Find a coplanar waveguide TEM with a given characteristic impedance\n""")
         
         mode = int(input())
         mode_string = ""
@@ -74,6 +76,14 @@ def main():
                 text = txt.microstrip_writer(filter_values)
                 mode_string = "microstrip_constk"
             case 7:
+                filter_values = calculate.microstrip_butterworth(microstrip_keys_list)
+                text = txt.microstrip_butterworth_writer(filter_values)
+                mode_string = "microstrip_butterworth"
+            case 8:
+                filter_values = calculate.microstrip_chebyshev(microstrip_keys_list)
+                text = txt.microstrip_chebyshev_writer(filter_values)
+                mode_string = "microstrip_chebyshev"
+            case 9:
                 filter_values = calculate.cpw_TEM(cpw_TEM_keys_list)
                 text = txt.cpw_TEM_writer(filter_values)
                 mode_string = "cpw_TEM"
