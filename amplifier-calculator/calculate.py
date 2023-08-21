@@ -70,22 +70,3 @@ def tuned(keys_list):
             amplifier[key] = "ERROR"
     
     return amplifier
-
-# CALCULATES POSSIBLE VALUES FOR A FEEDBACK AMPLIFIER
-def feedback(keys_list):    # TODO: IMPLEMENT
-
-    amplifier = {}
-
-    print("\n")
-
-    # Prompt user for input
-    f_0 = float(input("Enter the center frequency in Hz:\t"))
-    gain_dB = float(input("Enter the gain of the amplifier in dB:\t"))
-    Vdd = float(input("Enter the supply voltage in V:\t"))
-
-    #R_L > need a load and source impedance
-    
-
-
-
-    return amplifier
