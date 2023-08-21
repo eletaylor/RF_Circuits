@@ -10,8 +10,6 @@
     
 '''
 
-import math
-
 PI = 3.14159
 
 #VACUUM_PERMITTIVITY = 8.8542e-12
